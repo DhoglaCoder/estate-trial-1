@@ -1,0 +1,113 @@
+/* .browse-container{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.browse-container-left{
+    width: 1024px;
+    min-height: calc(100vh-112px);
+} */
+
+.browse-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 20px; /* Add some spacing between filter and listings */
+    flex-wrap: wrap;
+}
+
+.browse-filter-sidebar {
+    width: 250px;
+    min-height: calc(100vh - 112px);
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f9f9f9;
+}
+
+.filter-section {
+    margin-bottom: 15px;
+}
+
+.filter-section h4 {
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.filter-label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.pincode-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.browse-container-left {
+    /* width: 1024px; */
+    width: 1024px;
+    min-height: calc(100vh - 112px);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.filter-toggle-btn {
+    display: none;
+    background: #1A4C5A;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 55px
+}
+
+
+@media only screen and (max-width: 1024px) {
+    .browse-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Show toggle button */
+    .filter-toggle-btn {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    /* Hide filters by default */
+    .browse-filter-sidebar {
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        padding: 0;
+        border: none;
+        transition: max-height 0.3s ease-in-out;
+    }
+    .browse-filter-sidebar.hide {
+        display: none;
+    }
+
+    /* Show filters when toggle is clicked */
+    .browse-filter-sidebar.show {
+        max-height: 500px;
+        padding: 20px;
+        border: 1px solid #ddd;
+    }
+
+    /* Make Listings Full Width */
+    .browse-container-left {
+        width: 100%;
+        grid-template-columns: 1fr;
+    }
+}
