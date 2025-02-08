@@ -1,9 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { getStorage, ref,uploadBytes,getDownloadURL } from "firebase/storage";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 import image from "../../assets/uploadImage.png";
 import "./Add.css";
 import backendUrl from "../config/config";
+import app from "../Firebase/firebase";
+
+const storage = getStorage(app);
+const db  = getFirestore(app);
 
 export default function Add() {
   const [imageInputs, setImageInputs] = useState([]);
@@ -85,42 +91,69 @@ const handleFileChange = (e, index) => {
       return { ...prev, images: newImages };
     });
   };
+  const uploadImagesToFirebase = async () => {
+    const imageUrls = [];
+    for (const file of formData.images) {
+      const imageRef = ref(storage, `listings/${file.name}`);
+      await uploadBytes(imageRef, file);
+      const imageUrl = await getDownloadURL(imageRef);
+      imageUrls.push(imageUrl);
+    }
+    return imageUrls;
+  };
+    // const onSubmitHandler = async (event) => {
+    //     event.preventDefault();
+    //     const userId = localStorage.getItem("uid");
+    //     const dataToLog = { ...formData, userId };
+    //     console.log("Form Data with UID:", dataToLog);
+    //     const data = new FormData();
+    //     Object.keys(formData).forEach((key) => {
+    //         if (key === "images") {
+    //             formData.images.forEach((file) => data.append("images", file));
+    //         } else if (key === "features") {
+    //             data.append(key, JSON.stringify(formData[key]));
+    //         } else if (key === "location") {
+    //             data.append("location[lat]", formData.location.lat);
+    //             data.append("location[lng]", formData.location.lng);
+    //         } else {
+    //             data.append(key, formData[key]);
+    //         }
+    //     });
+    //     data.append("userId", userId);
+    //     console.log("Form Data:", formData);
+    //     try {
+    //         const response = await axios.post(`${backendUrl}/api/listings/add`, data, {
+    //             headers: {
+    //                 "Content-Type": "multipart/form-data",
+    //             },
+    //         });
+    //         toast.success("Listing added successfully",{
+    //                    position: "top-center"
+    //                })
+    //     } catch (error) {
+    //         console.error(error);
+    //         toast.error(error.message,{
+    //              position:"top-center",
+    //     })
+    //     }
+    // };
     const onSubmitHandler = async (event) => {
-        event.preventDefault();
-        const userId = localStorage.getItem("uid");
-        const dataToLog = { ...formData, userId };
-        console.log("Form Data with UID:", dataToLog);
-        const data = new FormData();
-        Object.keys(formData).forEach((key) => {
-            if (key === "images") {
-                formData.images.forEach((file) => data.append("images", file));
-            } else if (key === "features") {
-                data.append(key, JSON.stringify(formData[key]));
-            } else if (key === "location") {
-                data.append("location[lat]", formData.location.lat);
-                data.append("location[lng]", formData.location.lng);
-            } else {
-                data.append(key, formData[key]);
-            }
-        });
-        data.append("userId", userId);
-        console.log("Form Data:", formData);
-        try {
-            const response = await axios.post(`${backendUrl}/api/listings/add`, data, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            });
-            toast.success("Listing added successfully",{
-                       position: "top-center"
-                   })
-        } catch (error) {
-            console.error(error);
-            toast.error(error.message,{
-                 position:"top-center",
-        })
-        }
-    };
+    event.preventDefault();
+    try {
+      const userId = localStorage.getItem("uid");
+      const uploadedImageUrls = await uploadImagesToFirebase();
+      const newListing = {
+        ...formData,
+        userId,
+        images: uploadedImageUrls,
+      };
+      await addDoc(collection(db, "listings"), newListing);
+      toast.success("Listing added successfully", { position: "top-center" });
+    } catch (error) {
+      console.error(error);
+      toast.error(error.message, { position: "top-center" });
+    }
+  };
 
   const addImageInput = () => {
     setImageInputs([...imageInputs, imageInputs.length + 1]);
