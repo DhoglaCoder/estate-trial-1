@@ -21,55 +21,55 @@
 
         const featureImages = {
             wifi:{
-                src:'/images/wifi-icon.png',
+                src:'/estate-trial-1/images/wifi-icon.png',
                 label:'Wi-fi'
             },
             rainWater:{
-                src:'/images/rain-water-harvesting.png',
+                src:'/estate-trial-1/images/rain-water-harvesting.png',
                 label:'Rain Water'
             },
             Library:{
-                src:'/images/library-icon.png',
+                src:'/estate-trial-1/images/library-icon.png',
                 label:'Library'
             },
             gatedCommunity:{
-                src:'/images/gated-icon.png',
+                src:'/estate-trial-1/images/gated-icon.png',
                 label:'Gated Community'
             },
             swimmingPool:{
-                src:'/images/swimmingpool-icon.png',
+                src:'/estate-trial-1/images/swimmingpool-icon.png',
                 label:'Swimming Pool'
             },
             gymnasium:{
-                src:'/images/gym-icon.png',
+                src:'/estate-trial-1/images/gym-icon.png',
                 label:'Gymnasium'
             },
             cctv:{
-                src:'/images/cctv-icon.png',
+                src:'/estate-trial-1/images/cctv-icon.png',
                 label:'CCTV'
             },
             security:{
-                src:'/images/security-icon.png',
+                src:'/estate-trial-1/images/security-icon.png',
                 label:'Security'
             },
             powerBackUp:{
-                src:'/images/power.png',
+                src:'/estate-trial-1/images/power.png',
                 label:'Power BackUp'
             },
             hasParking:{
-                src:'/images/parking-icon.png',
+                src:'/estate-trial-1/images/parking-icon.png',
                 label:'Parking'
             },
             vastu:{
-                src:'/images/holy.png',
+                src:'/estate-trial-1/images/holy.png',
                 label:'Vastu'
             },
             salon:{
-                src:'/images/salon-icon.png',
+                src:'/estate-trial-1/images/salon-icon.png',
                 label:'Salon'
             },
             childrenPlay:{
-                src:'/images/children-park.png',
+                src:'/estate-trial-1/images/children-park.png',
                 label:'Children PlayArea'
             }
             
